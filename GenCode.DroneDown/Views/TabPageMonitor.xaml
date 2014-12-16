@@ -27,9 +27,7 @@
 				</ig:RadialGauge>
 				<ig:RadialGauge x:Name="distanceGauge" TransitionDuration="1500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
 				</ig:RadialGauge>
-				<Label HorizontalOptions="Center" VerticalOptions="End" Font="Large, 50" TextColor="Green" x:Name="DistanceValueMessage" Grid.Row="1" Grid.Column="0" />
 				<Label HorizontalOptions="Center" Font="Bold, Large" TextColor="Black" x:Name="BeaconDistanceMessages" Grid.Row="2" Grid.Column="0" />
-				<Label HorizontalOptions="Center" Font="Bold,Micro" TextColor="Black" x:Name="TestLabel" Grid.Row="3" Grid.Column="0" Text="{Binding MyVal, StringFormat='{0:T}'}" />
 			</Grid>
 		</ContentPage.Content>
 

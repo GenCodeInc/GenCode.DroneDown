@@ -76,11 +76,21 @@
       <Project>{C409C569-014B-48F9-9D3C-0EBAD0E9CE6F}</Project>
       <Name>GenCode.DroneDown</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BeaconDevices\GenCode.BeaconDevices.csproj">
+      <Project>{8EEF5755-CD1E-4EF3-8137-01F43E0700FD}</Project>
+      <Name>GenCode.BeaconDevices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenCode.Logging\GenCode.Logging.csproj">
+      <Project>{D84B89DF-E5B0-4F9D-9FB6-EA0CDFBA9314}</Project>
+      <Name>GenCode.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Classes\MonitorNotifier.cs" />
+    <Compile Include="Classes\RangeNotifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -106,5 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />
+    <Folder Include="Classes\" />
   </ItemGroup>
 </Project>

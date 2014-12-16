@@ -6,9 +6,9 @@ namespace GenCode.DroneDown
 {	
 	public partial class MainContent : TabbedPage
 	{	
-		private readonly TabPageWelcome WelcomePage = new TabPageWelcome ();
-		private readonly TabPageMonitor MonitorPage = new TabPageMonitor ();
-		private readonly TabPageCalibration CalibrationPage = new TabPageCalibration ();
+		public readonly TabPageWelcome WelcomePage = new TabPageWelcome ();
+		public readonly TabPageMonitor MonitorPage = new TabPageMonitor ();
+		public readonly TabPageCalibration CalibrationPage = new TabPageCalibration ();
 
 		public MainContent ()
 		{
