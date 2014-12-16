@@ -46,15 +46,6 @@
     <Reference Include="Android-iBeacon-Service">
       <HintPath>..\Components\xamarin-android-ibeacon-service-1.3\lib\android\Android-iBeacon-Service.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics.Xamarin.Android">
-      <HintPath>Infragistics.Xamarin.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="Infragistics.Xamarin">
-      <HintPath>Infragistics.Xamarin.dll</HintPath>
-    </Reference>
-    <Reference Include="InfragisticsAndroidBindings">
-      <HintPath>InfragisticsAndroidBindings.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Forms.Platform.Android">
       <HintPath>..\packages\Xamarin.Forms.1.2.3.6257\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
     </Reference>
@@ -69,6 +60,15 @@
     </Reference>
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\packages\Xamarin.Android.Support.v4.21.0.3.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics.Xamarin.Android">
+      <HintPath>Dependencies\Infragistics.Xamarin.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics.Xamarin">
+      <HintPath>Dependencies\Infragistics.Xamarin.dll</HintPath>
+    </Reference>
+    <Reference Include="InfragisticsAndroidBindings">
+      <HintPath>Dependencies\InfragisticsAndroidBindings.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +87,9 @@
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="packages.config" />
+    <None Include="Dependencies\Infragistics.Xamarin.dll" />
+    <None Include="Dependencies\Infragistics.Xamarin.Android.dll" />
+    <None Include="Dependencies\InfragisticsAndroidBindings.dll" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -100,5 +103,8 @@
       <Version>1.3</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dependencies\" />
   </ItemGroup>
 </Project>

@@ -57,18 +57,20 @@
       <HintPath>..\packages\Xamarin.Forms.1.2.3.6257\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="Infragistics.Xamarin">
-      <HintPath>Infragistics.Xamarin.dll</HintPath>
+      <HintPath>Dependencies\Infragistics.Xamarin.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Infragistics.Xamarin.dll" />
+    <None Include="Dependencies\Infragistics.Xamarin.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Models\" />
     <Folder Include="Classes\" />
+    <Folder Include="New Folder\" />
+    <Folder Include="Dependencies\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MainContent.xaml">
