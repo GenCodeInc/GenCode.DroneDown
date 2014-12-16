@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Infragistics.Xamarin.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
