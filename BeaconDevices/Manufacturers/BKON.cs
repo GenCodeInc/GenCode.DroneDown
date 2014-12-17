@@ -2,6 +2,12 @@
 
 namespace GenCode.BeaconDevices.Manufacturers
 {
+	/// <summary>
+	/// BKON.
+	/// 
+	/// Creates a bkon manufacturer
+	/// http://www.bkon.com/
+	/// </summary>
 	public class BKON : IManufacturer
 	{
 		private const string _uUID = "C48C6716-193F-477B-B73A-C550CE582A22";
@@ -9,13 +15,13 @@ namespace GenCode.BeaconDevices.Manufacturers
 
 		public BKON ()
 		{
-			System.Diagnostics.Debug.WriteLine(String.Format("{0} device created", _beaconId));
+			Logging.Log.WriteLine(String.Format("{0} device created", _beaconId));
 		}
 
 		#region IDevice implementation
-		public Manufacturer GetDevice ()
+		public Device GetDevice ()
 		{
-			return new Manufacturer {
+			return new Device {
 				BeaconId = _beaconId,
 				UUID = _uUID
 			};

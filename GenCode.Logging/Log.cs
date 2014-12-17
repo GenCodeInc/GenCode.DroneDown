@@ -2,7 +2,7 @@
 
 namespace GenCode.Logging
 {
-	// follows System.Diagnostics.TraceLevel, sadly not avail in PCL so rolled my own
+	// follows System.Diagnostics.TraceLevel, sadly not avail in PCL so rolled my own enum
 	public enum TraceLogLevel
 	{
 		Off = 0,
@@ -31,20 +31,19 @@ namespace GenCode.Logging
 		{
 			System.Diagnostics.Debug.WriteLine(String.Format("[GenCodeLog] {0} TraceLevel {1}", message, traceLevel));
 
-
 			//  Xamarin, Here we may do some other logging, like write it back to my service, parse or whatever
+			// this is an mobile app, but if this were the compiler we may want to write it out to a log or other.
 		}
 
 		/// <summary>
 		/// Exception Logging
 		/// </summary>
-		/// <param name="message">Message.</param>
+		/// <param name="ex">ex.</param>
 		/// <param name="traceLevel">Trace level.</param>
-		public static void WriteLine(Exception message, TraceLogLevel traceLevel = TraceLogLevel.Error)
+		public static void WriteLine(Exception ex, TraceLogLevel traceLevel = TraceLogLevel.Error)
 		{
-			System.Diagnostics.Debug.WriteLine(String.Format("[GenCodeLog] Message {0} TraceLevel {1}", message.Message, traceLevel));
-
-			//  Xamarin, Here we may do some other logging, like write it back to my service, parse or whatever
+			string message = String.Format ("{0} {1}", ex.Message, ex.InnerException != null ? ex.InnerException.Message : "No Inner Message");
+			WriteLine (String.Format ("[GenCodeLog]  {0} TraceLevel {1}", message, traceLevel));
 		}
 	}
 }

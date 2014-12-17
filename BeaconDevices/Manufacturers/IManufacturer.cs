@@ -3,11 +3,11 @@
 	/// <summary>
 	/// I manufacturer.
 	/// 
-	/// Creates a manufacturer and lets you assign manuf default device data to it, like UUID etc
+	/// Interface to create a manufacturer of a device
 	/// </summary>
 	public interface IManufacturer
 	{
-		Manufacturer GetDevice();
+		Device GetDevice();
 	}
 }
 

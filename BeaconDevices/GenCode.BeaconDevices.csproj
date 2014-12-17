@@ -35,10 +35,16 @@
     <Compile Include="Manufacturers\Radius.cs" />
     <Compile Include="Manufacturers\Estimote.cs" />
     <Compile Include="Manufacturers\IManufacturer.cs" />
-    <Compile Include="Manufacturers\Manufacturer.cs" />
+    <Compile Include="Manufacturers\Device.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Manufacturers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GenCode.Logging\GenCode.Logging.csproj">
+      <Project>{D84B89DF-E5B0-4F9D-9FB6-EA0CDFBA9314}</Project>
+      <Name>GenCode.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

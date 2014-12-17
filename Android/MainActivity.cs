@@ -154,6 +154,8 @@ namespace GenCode.DroneDown.Android
 
 			// Send the message, lets use a Tuple to prevent having to make a new class. 
 			MessagingCenter.Send (((MainContent)App.GetMainPage ()).MonitorPage, "BeaconMessage", new Tuple<bool, int, double> (found, rssi, accuracy));
+
+			// log whats happening
 			Log.WriteLine (String.Format ("RangingBeaconsInRegion sending message rssi {0} accuracy {1}", rssi, accuracy), TraceLogLevel.Verbose);
 		}
 	}
