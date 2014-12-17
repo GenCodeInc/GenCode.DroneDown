@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Infragistics.Xamarin.Controls;
 using GenCode.DroneDown;
 using Infragistics.Xamarin;
+using GenCode.Logging;
 
 namespace GenCode.DroneDown
 {
@@ -16,6 +17,7 @@ namespace GenCode.DroneDown
 		public TabPageMonitor ()
 		{
 			InitializeComponent ();
+			Log.WriteLine ("TabPageMonitor, loading.", TraceLogLevel.Verbose);
 
 			FormatGauges ();
 		}

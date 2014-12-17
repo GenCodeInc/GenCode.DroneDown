@@ -1,17 +1,13 @@
 ﻿using System;
-
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 
 using Xamarin.Forms.Platform.Android;
 using RadiusNetworks.IBeaconAndroid;
 using Xamarin.Forms;
 using System.Linq;
+using GenCode.Logging;
 
 
 namespace GenCode.DroneDown.Android
@@ -38,28 +34,36 @@ namespace GenCode.DroneDown.Android
 			}
 			catch(Exception ex) {
 				Logging.Log.WriteLine(ex);
+				throw;
 			}
 		}
 
 		protected override void OnCreate (Bundle bundle)
 		{
-			base.OnCreate (bundle);
+			try
+			{
+				base.OnCreate (bundle);
 
-			// This is required to initialize the infragistics controls per documentation, supressing warning
-			#pragma warning disable 219
-			var type = typeof(Infragistics.Xamarin.Android.RadialGaugeViewRenderer);
-			#pragma warning restore 219
+				// This is required to initialize the infragistics controls per documentation, supressing warning
+				#pragma warning disable 219
+				var type = typeof(Infragistics.Xamarin.Android.RadialGaugeViewRenderer);
+				#pragma warning restore 219
 
-			Xamarin.Forms.Forms.Init (this, bundle);
+				Xamarin.Forms.Forms.Init (this, bundle);
 
-			_iBeaconManager.Bind (this);
-			_monitorNotifier.EnterRegionComplete += EnteredRegion;
-			_monitorNotifier.ExitRegionComplete += ExitedRegion;
+				_iBeaconManager.Bind (this);
+				_monitorNotifier.EnterRegionComplete += EnteredRegion;
+				_monitorNotifier.ExitRegionComplete += ExitedRegion;
 
-			_rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
+				_rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
 
 
-			SetPage (App.GetMainPage ());
+				SetPage (App.GetMainPage ());
+			}
+			catch(Exception ex) {
+				Logging.Log.WriteLine(ex);
+				throw;
+			}
 		}
 
 		/// <summary>
@@ -72,14 +76,21 @@ namespace GenCode.DroneDown.Android
 		/// <param name="manuf">manufucturer.</param>
 		private void SetupBeacons(GenCode.BeaconDevices.Manufacturers.IManufacturer manuf)
 		{
-			var device = manuf.GetDevice ();
+			try
+			{
+				var device = manuf.GetDevice ();
 
-			_iBeaconManager = IBeaconManager.GetInstanceForApplication (this);
-			_monitorNotifier = new MonitorNotifier ();
-			_rangeNotifier = new RangeNotifier ();
+				_iBeaconManager = IBeaconManager.GetInstanceForApplication (this);
+				_monitorNotifier = new MonitorNotifier ();
+				_rangeNotifier = new RangeNotifier ();
 
-			_monitoringRegion = new Region (device.BeaconId, device.UUID, null, null);
-			_rangingRegion = new Region (device.BeaconId, device.UUID, null, null);
+				_monitoringRegion = new Region (device.BeaconId, device.UUID, null, null);
+				_rangingRegion = new Region (device.BeaconId, device.UUID, null, null);
+			}
+			catch(Exception ex) {
+				Logging.Log.WriteLine (ex);
+				throw;
+			}
 		}
 
 
@@ -88,11 +99,18 @@ namespace GenCode.DroneDown.Android
 		/// </summary>
 		public void OnIBeaconServiceConnect ()
 		{
-			_iBeaconManager.SetMonitorNotifier (_monitorNotifier);
-			_iBeaconManager.SetRangeNotifier (_rangeNotifier);
+			try
+			{
+				_iBeaconManager.SetMonitorNotifier (_monitorNotifier);
+				_iBeaconManager.SetRangeNotifier (_rangeNotifier);
 
-			_iBeaconManager.StartMonitoringBeaconsInRegion (_monitoringRegion);
-			_iBeaconManager.StartRangingBeaconsInRegion (_rangingRegion);
+				_iBeaconManager.StartMonitoringBeaconsInRegion (_monitoringRegion);
+				_iBeaconManager.StartRangingBeaconsInRegion (_rangingRegion);
+			}
+			catch(Exception ex) {
+				Logging.Log.WriteLine (ex);
+				throw;
+			}
 		}
 
 		/// <summary>
@@ -102,7 +120,7 @@ namespace GenCode.DroneDown.Android
 		/// <param name="e">E.</param>
 		void EnteredRegion (object sender, MonitorEventArgs e)
 		{
-			System.Diagnostics.Debug.WriteLine ("Entered Region");
+			Log.WriteLine ("Entered Region", TraceLogLevel.Verbose);
 		}
 
 		/// <summary>
@@ -112,7 +130,7 @@ namespace GenCode.DroneDown.Android
 		/// <param name="e">E.</param>
 		void ExitedRegion (object sender, MonitorEventArgs e)
 		{
-			System.Diagnostics.Debug.WriteLine ("Exited Region");
+			Log.WriteLine ("Exited Region", TraceLogLevel.Verbose);
 		}
 
 		/// <summary>
@@ -136,6 +154,7 @@ namespace GenCode.DroneDown.Android
 
 			// Send the message, lets use a Tuple to prevent having to make a new class. 
 			MessagingCenter.Send (((MainContent)App.GetMainPage ()).MonitorPage, "BeaconMessage", new Tuple<bool, int, double> (found, rssi, accuracy));
+			Log.WriteLine (String.Format ("RangingBeaconsInRegion sending message rssi {0} accuracy {1}", rssi, accuracy), TraceLogLevel.Verbose);
 		}
 	}
 }

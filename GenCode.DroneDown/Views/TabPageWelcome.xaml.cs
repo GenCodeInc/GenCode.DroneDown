@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using GenCode.Logging;
 
 namespace GenCode.DroneDown
 {	
@@ -10,6 +11,7 @@ namespace GenCode.DroneDown
 		{
 			InitializeComponent ();
 
+			Log.WriteLine ("TabPageWelcome, loading.", TraceLogLevel.Verbose);
 		}
 	}
 }

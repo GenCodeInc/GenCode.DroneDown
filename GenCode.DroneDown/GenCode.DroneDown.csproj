@@ -86,4 +86,10 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GenCode.Logging\GenCode.Logging.csproj">
+      <Project>{D84B89DF-E5B0-4F9D-9FB6-EA0CDFBA9314}</Project>
+      <Name>GenCode.Logging</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using GenCode.Logging;
 
 namespace GenCode.DroneDown
 {	
@@ -13,6 +14,7 @@ namespace GenCode.DroneDown
 		public MainContent ()
 		{
 			InitializeComponent ();
+			Log.WriteLine ("MainContent, Loading tabs.", TraceLogLevel.Verbose);
 
 			this.Children.Add (WelcomePage);
 			this.Children.Add (MonitorPage);

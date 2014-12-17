@@ -1,6 +1,7 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using GenCode.Logging;
 
 namespace GenCode.DroneDown
 {	
@@ -9,6 +10,7 @@ namespace GenCode.DroneDown
 		public TabPageCalibration ()
 		{
 			InitializeComponent ();
+			Log.WriteLine ("TabPageCalibration, loading.", TraceLogLevel.Verbose);
 		}
 	}
 }
