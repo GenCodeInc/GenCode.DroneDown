@@ -49,9 +49,7 @@ namespace GenCode.DroneDown.ViewModels
 		{
 			SetupBeacons (new List<IManufacturer> { new XamarinBeacons (), new BKON (), new Estimote (), new Radius () });
 
-			MessagingCenter.Subscribe<TabPageWelcome> (this, "Hi", (sender) => {
-				// do something whenever the "Hi" message is sent
-			});
+
 		}
 
 		/// <summary>
