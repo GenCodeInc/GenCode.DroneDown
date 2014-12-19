@@ -13,20 +13,22 @@ namespace GenCode.BeaconDevices.Manufacturers
 		private const string _uUID = "C48C6716-193F-477B-B73A-C550CE582A22";
 		private const string _beaconId = "BKON";
 
+		#region IManufacturer implementation
+
+		public Device GetDevice {
+			get { return new Device {
+					BeaconId = _beaconId,
+					UUID = _uUID
+				};			
+			}
+		}
+
+		#endregion
+
 		public BKON ()
 		{
 			Logging.Log.WriteLine(String.Format("{0} device created", _beaconId));
 		}
-
-		#region IDevice implementation
-		public Device GetDevice ()
-		{
-			return new Device {
-				BeaconId = _beaconId,
-				UUID = _uUID
-			};
-		}
-		#endregion
 	}
 }
 

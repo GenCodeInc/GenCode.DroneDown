@@ -4,19 +4,17 @@ using Xamarin.Forms;
 
 namespace GenCode.DroneDown.ViewModels
 {
-
 	/// <summary>
 	/// Monitor view model.
 	/// </summary>
-	class MonitorViewModel : INotifyPropertyChanged
+	class TabPageMonitorViewModel : INotifyPropertyChanged
 	{
+		public event PropertyChangedEventHandler PropertyChanged;
 		string val;
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public MonitorViewModel()
+		public TabPageMonitorViewModel()
 		{
-			this.MyVal = DateTime.Now.ToString();
+			MyVal = DateTime.Now.ToString();
 
 			Device.StartTimer(TimeSpan.FromSeconds(1), () => {
 					this.MyVal = DateTime.Now.ToString();

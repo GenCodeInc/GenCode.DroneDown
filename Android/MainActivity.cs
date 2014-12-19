@@ -78,7 +78,7 @@ namespace GenCode.DroneDown.Android
 		{
 			try
 			{
-				var device = manuf.GetDevice ();
+				var device = manuf.GetDevice;
 
 				_iBeaconManager = IBeaconManager.GetInstanceForApplication (this);
 				_monitorNotifier = new MonitorNotifier ();

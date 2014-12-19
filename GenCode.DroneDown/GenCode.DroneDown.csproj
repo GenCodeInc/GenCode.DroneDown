@@ -44,8 +44,9 @@
     <Compile Include="Views\TabPageCalibration.xaml.cs">
       <DependentUpon>TabPageCalibration.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\MonitorViewModel.cs" />
     <Compile Include="Classes\DistanceCalculator.cs" />
+    <Compile Include="ViewModels\TabPageWelcomeViewModel.cs" />
+    <Compile Include="ViewModels\TabPageMonitorViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
@@ -89,6 +90,10 @@
     <ProjectReference Include="..\GenCode.Logging\GenCode.Logging.csproj">
       <Project>{D84B89DF-E5B0-4F9D-9FB6-EA0CDFBA9314}</Project>
       <Name>GenCode.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeaconDevices\GenCode.BeaconDevices.csproj">
+      <Project>{8EEF5755-CD1E-4EF3-8137-01F43E0700FD}</Project>
+      <Name>GenCode.BeaconDevices</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

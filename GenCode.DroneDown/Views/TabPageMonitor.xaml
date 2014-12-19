@@ -7,7 +7,7 @@
 		<ContentPage.Content>
 			<Grid x:Name="contentGrid" BackgroundColor="#a9a9a9">
 				<Grid.BindingContext>
-					<local:MonitorViewModel />
+					<local:TabPageMonitorViewModel />
 				</Grid.BindingContext>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="80" />

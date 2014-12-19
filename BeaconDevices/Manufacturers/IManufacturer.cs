@@ -7,7 +7,9 @@
 	/// </summary>
 	public interface IManufacturer
 	{
-		Device GetDevice();
+		Device GetDevice {
+			get;
+		}
 	}
 }
 
