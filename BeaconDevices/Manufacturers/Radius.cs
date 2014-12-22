@@ -14,7 +14,8 @@ namespace GenCode.BeaconDevices.Manufacturers
 		#region IManufacturer implementation
 
 		public Device GetDevice {
-			get { return new Device {
+			get {
+				return new Device {
 					BeaconId = "Radius",
 					UUID = "2F234454-cf6d4a0f-adf2-f4911ba9ffa6",
 					Description = "Look for a BKON beacon http://www.radiusnetworks.com"
@@ -26,7 +27,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 
 		public Radius ()
 		{
-			Logging.Log.WriteLine(String.Format("{0} device created", GetDevice.BeaconId));
+			Logging.Log.WriteLine (String.Format ("{0} device created", GetDevice.BeaconId));
 		}
 	}
 }

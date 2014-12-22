@@ -12,6 +12,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 	public class Estimote : IManufacturer
 	{
 		#region IManufacturer implementation
+
 		public Device GetDevice {
 			get {
 				return new Device {
@@ -26,7 +27,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 
 		public Estimote ()
 		{
-			Logging.Log.WriteLine(String.Format("{0} device created", GetDevice.BeaconId));
+			Logging.Log.WriteLine (String.Format ("{0} device created", GetDevice.BeaconId));
 		}
 	}
 }

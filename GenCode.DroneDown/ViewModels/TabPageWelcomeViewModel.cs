@@ -19,7 +19,9 @@ namespace GenCode.DroneDown.ViewModels
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
-		private List<GenCode.BeaconDevices.Manufacturers.Device>  _beacons = new List<GenCode.BeaconDevices.Manufacturers.Device> ();
+
+		private List<GenCode.BeaconDevices.Manufacturers.Device> _beacons = new List<GenCode.BeaconDevices.Manufacturers.Device> ();
+
 		public List<GenCode.BeaconDevices.Manufacturers.Device>  Beacons {
 			set {
 				if (_beacons != value) {
@@ -34,6 +36,12 @@ namespace GenCode.DroneDown.ViewModels
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GenCode.DroneDown.ViewModels.TabPageWelcomeViewModel"/> class.
+		/// 
+		/// Set up beacons in the BeaconDevices classes that I want to use by passing in a list of interfaces
+		/// 
+		/// </summary>
 		public TabPageWelcomeViewModel ()
 		{
 			SetupBeacons (new List<IManufacturer> { new BKON (), new Estimote (), new Radius () });
@@ -51,7 +59,6 @@ namespace GenCode.DroneDown.ViewModels
 				foreach (var item in manufs) {
 					Beacons.Add (item.GetDevice);
 				}
-				//Beacons2.First().BeaconId
 			} catch (Exception ex) {
 				Logging.Log.WriteLine (ex);
 				throw;

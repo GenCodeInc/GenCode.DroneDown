@@ -30,7 +30,7 @@ namespace GenCode.Logging
 		public static void WriteLine(string message, TraceLogLevel traceLevel = TraceLogLevel.Error)
 		{
 			try {
-				System.Diagnostics.Debug.WriteLine(String.Format("[GenCodeLog] {0} TraceLevel {1}", message, traceLevel));
+				System.Diagnostics.Debug.WriteLine(String.Format("[GenCodeLog]\n\tDateTime {0}\n\tTraceLevel {1}\n\t{2}", DateTime.Now, traceLevel, message));
 				// Xamarin, Here we may do some other logging, like write it back to my service, parse or other persistant storage
 			}
 			catch {
@@ -50,7 +50,7 @@ namespace GenCode.Logging
 		{
 			try {
 				string message = String.Format ("{0} {1}", ex.Message, ex.InnerException != null ? ex.InnerException.Message : "No Inner Message");
-				WriteLine (String.Format ("[GenCodeLog]  {0} TraceLevel {1}", message, traceLevel));
+				Log.WriteLine (message, traceLevel);
 			}
 			catch {
 				// If an exception is thrown during logging eat the error but write it to console.

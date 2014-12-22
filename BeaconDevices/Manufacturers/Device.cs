@@ -11,10 +11,12 @@
 			get;
 			set;
 		}
+
 		public string BeaconId {
 			get;
 			set;
 		}
+
 		public string Description {
 			get;
 			set;

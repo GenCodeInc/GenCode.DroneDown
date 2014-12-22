@@ -10,35 +10,31 @@ namespace GenCode.DroneDown.ViewModels
 	class TabPageMonitorViewModel : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
+
 		string val;
 
-		public TabPageMonitorViewModel()
+		public TabPageMonitorViewModel ()
 		{
-			MyVal = DateTime.Now.ToString();
+			MyVal = DateTime.Now.ToString ();
 
-			Device.StartTimer(TimeSpan.FromSeconds(1), () => {
-					this.MyVal = DateTime.Now.ToString();
-					return true;
-				});            
+			Device.StartTimer (TimeSpan.FromSeconds (1), () => {
+				this.MyVal = DateTime.Now.ToString ();
+				return true;
+			});            
 		}
 
-		public string MyVal
-		{
-			set
-			{
-				if (val != value)
-				{
+		public string MyVal {
+			set {
+				if (val != value) {
 					val = value;
 
-					if (PropertyChanged != null)
-					{
-						PropertyChanged(this, 
-							new PropertyChangedEventArgs("MyVal"));
+					if (PropertyChanged != null) {
+						PropertyChanged (this, 
+							new PropertyChangedEventArgs ("MyVal"));
 					}
 				}
 			}
-			get
-			{
+			get {
 				return val;
 			}
 		}

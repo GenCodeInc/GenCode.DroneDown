@@ -11,7 +11,8 @@ namespace GenCode.BeaconDevices.Manufacturers
 	public class BKON : IManufacturer
 	{
 		public Device GetDevice {
-			get { return new Device {
+			get {
+				return new Device {
 					BeaconId = "BKON",
 					UUID = "C48C6716-193F-477B-B73A-C550CE582A22",
 					Description = "Look for a BKON beacon http://www.bkon.com"
@@ -21,7 +22,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 
 		public BKON ()
 		{
-			Logging.Log.WriteLine(String.Format("{0} device created", GetDevice.BeaconId));
+			Logging.Log.WriteLine (String.Format ("{0} device created", GetDevice.BeaconId));
 		}
 	}
 }

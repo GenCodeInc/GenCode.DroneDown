@@ -1,34 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage Title="Monitor" xmlns="http://xamarin.com/schemas/2014/forms" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-	xmlns:local="clr-namespace:GenCode.DroneDown.ViewModels;assembly=GenCode.DroneDown"
-	xmlns:ig="clr-namespace:Infragistics.Xamarin.Controls;assembly=Infragistics.Xamarin" 
-	x:Class="GenCode.DroneDown.TabPageMonitor">
-		<ContentPage.Content>
-			<Grid x:Name="contentGrid" BackgroundColor="#a9a9a9">
-				<Grid.BindingContext>
-					<local:TabPageMonitorViewModel />
-				</Grid.BindingContext>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="80" />
-					<RowDefinition Height="*" />
-					<RowDefinition Height="20" />
-					<RowDefinition Height="20" />
-					<RowDefinition Height="80" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
-				<ig:RadialGauge x:Name="radialGauge" TransitionDuration="500" NeedleBrush="Blue" ScaleStartAngle="90" Grid.Row="1" Grid.Column="0">
-				</ig:RadialGauge>
-				<ig:RadialGauge x:Name="radialGaugeInner" TransitionDuration="500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
-				</ig:RadialGauge>
-				<ig:RadialGauge x:Name="rssiUnderGauge" TransitionDuration="1500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
-				</ig:RadialGauge>
-				<ig:RadialGauge x:Name="distanceGauge" TransitionDuration="1500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
-				</ig:RadialGauge>
-				<Label HorizontalOptions="Center" Font="Bold, Large" TextColor="Black" x:Name="BeaconDistanceMessages" Grid.Row="2" Grid.Column="0" />
-			</Grid>
-		</ContentPage.Content>
-
+<ContentPage Title="Monitor" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:GenCode.DroneDown.ViewModels;assembly=GenCode.DroneDown" xmlns:ig="clr-namespace:Infragistics.Xamarin.Controls;assembly=Infragistics.Xamarin" x:Class="GenCode.DroneDown.TabPageMonitor">
+	<ContentPage.Content>
+		<Grid x:Name="contentGrid" BackgroundColor="#a9a9a9">
+			<Grid.BindingContext>
+				<local:TabPageMonitorViewModel />
+			</Grid.BindingContext>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="80" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="20" />
+				<RowDefinition Height="20" />
+				<RowDefinition Height="80" />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<ig:RadialGauge x:Name="radialGauge" TransitionDuration="500" NeedleBrush="Blue" ScaleStartAngle="90" Grid.Row="1" Grid.Column="0">
+			</ig:RadialGauge>
+			<ig:RadialGauge x:Name="radialGaugeInner" TransitionDuration="500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
+			</ig:RadialGauge>
+			<ig:RadialGauge x:Name="rssiUnderGauge" TransitionDuration="1500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
+			</ig:RadialGauge>
+			<ig:RadialGauge x:Name="distanceGauge" TransitionDuration="1500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
+			</ig:RadialGauge>
+			<Label HorizontalOptions="Center" Font="Bold, Large" TextColor="Black" x:Name="BeaconDistanceMessages" Grid.Row="2" Grid.Column="0" />
+		</Grid>
+	</ContentPage.Content>
 </ContentPage>

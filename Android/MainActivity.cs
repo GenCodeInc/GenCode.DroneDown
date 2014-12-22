@@ -30,7 +30,7 @@ namespace GenCode.DroneDown.Android
 				SetupBeacons (GenCode.BeaconDevices.Default.Device);
 			}
 			catch(Exception ex) {
-				Logging.Log.WriteLine(ex);
+				Log.WriteLine(ex);
 				throw;
 			}
 		}
@@ -38,7 +38,7 @@ namespace GenCode.DroneDown.Android
 		protected override void OnCreate (Bundle bundle)
 		{
 			try
-			{
+			{ 
 				base.OnCreate (bundle);
 
 				// This is required to initialize the infragistics controls per documentation, supressing warning
@@ -48,10 +48,16 @@ namespace GenCode.DroneDown.Android
 
 				Xamarin.Forms.Forms.Init (this, bundle);
 
+				_iBeaconManager.Bind (this);
+				_monitorNotifier.EnterRegionComplete += EnteredRegion;
+				_monitorNotifier.ExitRegionComplete += ExitedRegion;
+
+				_rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
+
 				SetPage (App.GetMainPage ());
 			}
 			catch(Exception ex) {
-				Logging.Log.WriteLine(ex);
+				Log.WriteLine(ex);
 				throw;
 			}
 		}
@@ -73,11 +79,8 @@ namespace GenCode.DroneDown.Android
 					_monitoringRegion = new Region (device.BeaconId, device.UUID, null, null);
 					_rangingRegion = new Region (device.BeaconId, device.UUID, null, null);
 
-					_iBeaconManager.Bind (this);
-					_monitorNotifier.EnterRegionComplete += EnteredRegion;
-					_monitorNotifier.ExitRegionComplete += ExitedRegion;
 
-					_rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
+					Log.WriteLine ("Setup beacon method complete", TraceLogLevel.Verbose);
 				}
 
 				Log.WriteLine("No device is set up", TraceLogLevel.Verbose);
@@ -101,9 +104,11 @@ namespace GenCode.DroneDown.Android
 
 				_iBeaconManager.StartMonitoringBeaconsInRegion (_monitoringRegion);
 				_iBeaconManager.StartRangingBeaconsInRegion (_rangingRegion);
+
+				Log.WriteLine ("Beacon service connected", TraceLogLevel.Verbose);
 			}
 			catch(Exception ex) {
-				Logging.Log.WriteLine (ex);
+				Log.WriteLine (ex);
 				throw;
 			}
 		}
@@ -136,22 +141,28 @@ namespace GenCode.DroneDown.Android
 		/// <param name="e">E.</param>
 		void RangingBeaconsInRegion (object sender, RangeEventArgs e)
 		{
-			bool found = false;
-			int rssi = 0;
-			double accuracy = -999;
+			try {
+				bool found = false;
+				int rssi = 0;
+				double accuracy = -999;
 
-			if (e.Beacons.Count > 0) {
-				found = true;
-				var beacon = e.Beacons.FirstOrDefault ();
-				rssi = beacon.Rssi;
-				accuracy = beacon.Accuracy;
+				if (e.Beacons.Count > 0) {
+					found = true;
+					var beacon = e.Beacons.FirstOrDefault ();
+					rssi = beacon.Rssi;
+					accuracy = beacon.Accuracy;
+				}
+
+				// Send the message, lets use a Tuple to prevent having to make a new class.
+				MessagingCenter.Send (((MainContent)App.GetMainPage ()).MonitorPage, "BeaconMessage", new Tuple<bool, int, double> (found, rssi, accuracy));
+
+				// log whats happening
+				Log.WriteLine (String.Format ("RangingBeaconsInRegion sending message rssi {0} accuracy {1}", rssi, accuracy), TraceLogLevel.Verbose);
 			}
-
-			// Send the message, lets use a Tuple to prevent having to make a new class. 
-			MessagingCenter.Send (((MainContent)App.GetMainPage ()).MonitorPage, "BeaconMessage", new Tuple<bool, int, double> (found, rssi, accuracy));
-
-			// log whats happening
-			Log.WriteLine (String.Format ("RangingBeaconsInRegion sending message rssi {0} accuracy {1}", rssi, accuracy), TraceLogLevel.Verbose);
+			catch(Exception ex) {
+				Log.WriteLine (ex);
+				throw;
+			}
 		}
 	}
 }
