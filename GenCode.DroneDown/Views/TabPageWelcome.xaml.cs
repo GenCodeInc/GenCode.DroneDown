@@ -4,9 +4,13 @@ using Xamarin.Forms;
 using GenCode.Logging;
 using System.Linq;
 using GenCode.BeaconDevices.Manufacturers;
+using GenCode.DroneDown.ViewModels;
 
 namespace GenCode.DroneDown
 {	
+	/// <summary>
+	/// Welcome page that lets the use select their beacon
+	/// </summary>
 	public partial class TabPageWelcome : ContentPage
 	{	
 
@@ -22,13 +26,13 @@ namespace GenCode.DroneDown
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="e">E.</param>
-		void OnItemSelected (object sender, ItemTappedEventArgs e) {
-
+		void OnItemTapped (object sender, ItemTappedEventArgs e) {
 			if (e == null) return; // has been set to null, do not 'process' tapped event
 
-			MessagingCenter.Send<TabPageWelcome, string> (this, "Hi", "John");
-
 			Log.WriteLine ("Tapped: " + e.Item, TraceLogLevel.Verbose);
+
+			GenCode.BeaconDevices.Default.Device = (GenCode.BeaconDevices.Manufacturers.Device)e.Item;
+
 			((ListView)sender).SelectedItem = null; // de-select the row
 		}
 	}

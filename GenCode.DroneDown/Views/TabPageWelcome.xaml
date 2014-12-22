@@ -4,14 +4,15 @@
 		<local:TabPageWelcomeViewModel />
 	</ContentPage.BindingContext>
 	<ContentPage.Content>
-		<ListView ItemsSource="{Binding Beacons2}">
+		<ListView ItemTapped="OnItemTapped" ItemsSource="{Binding Beacons}">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
 						<ViewCell.View>
 							<StackLayout Orientation="Horizontal">
 								<StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
-									<Label TextColor="Fuschia" Text="{Binding BeaconId}" HorizontalOptions="FillAndExpand" />
+									<Label TextColor="White" Text="{Binding BeaconId}" HorizontalOptions="FillAndExpand" />
+									<Label TextColor="Gray" Text="{Binding Description}" HorizontalOptions="FillAndExpand" />
 								</StackLayout>
 							</StackLayout>
 						</ViewCell.View>

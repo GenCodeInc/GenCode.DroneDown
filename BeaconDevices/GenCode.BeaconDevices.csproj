@@ -37,6 +37,7 @@
     <Compile Include="Manufacturers\IManufacturer.cs" />
     <Compile Include="Manufacturers\Device.cs" />
     <Compile Include="Manufacturers\Xamarin.cs" />
+    <Compile Include="Selected.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

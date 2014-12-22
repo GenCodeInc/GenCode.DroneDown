@@ -29,21 +29,34 @@ namespace GenCode.Logging
 		/// <param name="traceLevel">Trace level.</param>
 		public static void WriteLine(string message, TraceLogLevel traceLevel = TraceLogLevel.Error)
 		{
-			System.Diagnostics.Debug.WriteLine(String.Format("[GenCodeLog] {0} TraceLevel {1}", message, traceLevel));
-
-			//  Xamarin, Here we may do some other logging, like write it back to my service, parse or whatever
-			// this is an mobile app, but if this were the compiler we may want to write it out to a log or other.
+			try {
+				System.Diagnostics.Debug.WriteLine(String.Format("[GenCodeLog] {0} TraceLevel {1}", message, traceLevel));
+				// Xamarin, Here we may do some other logging, like write it back to my service, parse or other persistant storage
+			}
+			catch {
+				// If an exception is thrown during logging eat the error but should write it to console.
+				// We sure would not want to blow up the app if writing to a persistant log like MSMQ/WCF/Db 
+				// so we catch here, write, and never throw it back.
+			}
 		}
 
 		/// <summary>
-		/// Exception Logging
+		/// Exception Logging, this will extract the message and the inner (if ! null) and send 
+		/// it to the overloaded WriteLine logger that writes to persistant storage (above)
 		/// </summary>
 		/// <param name="ex">ex.</param>
 		/// <param name="traceLevel">Trace level.</param>
 		public static void WriteLine(Exception ex, TraceLogLevel traceLevel = TraceLogLevel.Error)
 		{
-			string message = String.Format ("{0} {1}", ex.Message, ex.InnerException != null ? ex.InnerException.Message : "No Inner Message");
-			WriteLine (String.Format ("[GenCodeLog]  {0} TraceLevel {1}", message, traceLevel));
+			try {
+				string message = String.Format ("{0} {1}", ex.Message, ex.InnerException != null ? ex.InnerException.Message : "No Inner Message");
+				WriteLine (String.Format ("[GenCodeLog]  {0} TraceLevel {1}", message, traceLevel));
+			}
+			catch {
+				// If an exception is thrown during logging eat the error but write it to console.
+				// We sure would not want to blow up the app if writing to a log like MSMQ/WCF/Db 
+				// or other storage for logging failed.
+			}
 		}
 	}
 }

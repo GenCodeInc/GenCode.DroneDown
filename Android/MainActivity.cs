@@ -15,22 +15,19 @@ namespace GenCode.DroneDown.Android
 	[Activity (Label = "GenCode.DroneDown.Android", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : AndroidActivity, IBeaconConsumer
 	{
-		/// <summary>
-		/// Xamarin Team: 
-		/// I use _ for my private variables, some workplaces use upper for both properties and variables, im open to change if needed
-		/// </summary>
 		IBeaconManager _iBeaconManager;
 		MonitorNotifier _monitorNotifier;
 		RangeNotifier _rangeNotifier;
 		Region _monitoringRegion;
 		Region _rangingRegion;
 
+
 		public MainActivity ()
 		{
 			try
 			{
-				// setting up a beacon to test by passing in any manuf you want, this case I want a BKON device.
-				SetupBeacons (new GenCode.BeaconDevices.Manufacturers.BKON ());
+				// setting up a beacon by passing in any device you want
+				SetupBeacons (GenCode.BeaconDevices.Default.Device);
 			}
 			catch(Exception ex) {
 				Logging.Log.WriteLine(ex);
@@ -51,13 +48,6 @@ namespace GenCode.DroneDown.Android
 
 				Xamarin.Forms.Forms.Init (this, bundle);
 
-				_iBeaconManager.Bind (this);
-				_monitorNotifier.EnterRegionComplete += EnteredRegion;
-				_monitorNotifier.ExitRegionComplete += ExitedRegion;
-
-				_rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
-
-
 				SetPage (App.GetMainPage ());
 			}
 			catch(Exception ex) {
@@ -67,25 +57,30 @@ namespace GenCode.DroneDown.Android
 		}
 
 		/// <summary>
-		/// Setups the beacons.
-		/// 
-		/// Xamarin Team: 
-		/// This is a method to create a device, it takes an interface(IManufacturer) you can pass it any manuf you like.
-		/// Although I did not need to do it this way, I wanted to show Xamarin the useage of Interfaces and Dependency Injection
+		/// Setups your beacon.
 		/// </summary>
-		/// <param name="manuf">manufucturer.</param>
-		private void SetupBeacons(GenCode.BeaconDevices.Manufacturers.IManufacturer manuf)
+		/// <param name="device">manufucturer.</param>
+		private void SetupBeacons(GenCode.BeaconDevices.Manufacturers.Device device)
 		{
 			try
 			{
-				var device = manuf.GetDevice;
+				if(device != null)
+				{
+					_iBeaconManager = IBeaconManager.GetInstanceForApplication (this);
+					_monitorNotifier = new MonitorNotifier ();
+					_rangeNotifier = new RangeNotifier ();
 
-				_iBeaconManager = IBeaconManager.GetInstanceForApplication (this);
-				_monitorNotifier = new MonitorNotifier ();
-				_rangeNotifier = new RangeNotifier ();
+					_monitoringRegion = new Region (device.BeaconId, device.UUID, null, null);
+					_rangingRegion = new Region (device.BeaconId, device.UUID, null, null);
 
-				_monitoringRegion = new Region (device.BeaconId, device.UUID, null, null);
-				_rangingRegion = new Region (device.BeaconId, device.UUID, null, null);
+					_iBeaconManager.Bind (this);
+					_monitorNotifier.EnterRegionComplete += EnteredRegion;
+					_monitorNotifier.ExitRegionComplete += ExitedRegion;
+
+					_rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
+				}
+
+				Log.WriteLine("No device is set up", TraceLogLevel.Verbose);
 			}
 			catch(Exception ex) {
 				Logging.Log.WriteLine (ex);

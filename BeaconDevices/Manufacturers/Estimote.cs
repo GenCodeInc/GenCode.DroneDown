@@ -11,16 +11,13 @@ namespace GenCode.BeaconDevices.Manufacturers
 	/// </summary>
 	public class Estimote : IManufacturer
 	{
-		private const string _uUID = "C48C6716-193F-477B-B73A-C550CE582A22";
-		private const string _beaconId = "Estimote";
-
 		#region IManufacturer implementation
-
 		public Device GetDevice {
 			get {
 				return new Device {
-					BeaconId = _beaconId,
-					UUID = _uUID
+					BeaconId = "Estimote",
+					UUID = "C48C6716-193F-477B-B73A-C550CE582A22",
+					Description = "Look for a Estimote beacon http://estimote.com"
 				};
 			}
 		}
@@ -29,7 +26,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 
 		public Estimote ()
 		{
-			Logging.Log.WriteLine(String.Format("{0} device created", _beaconId));
+			Logging.Log.WriteLine(String.Format("{0} device created", GetDevice.BeaconId));
 		}
 	}
 }

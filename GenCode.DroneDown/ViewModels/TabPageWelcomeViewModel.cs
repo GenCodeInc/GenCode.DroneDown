@@ -13,15 +13,19 @@ namespace GenCode.DroneDown.ViewModels
 	/// </summary>
 	class TabPageWelcomeViewModel : INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
+		public GenCode.BeaconDevices.Manufacturers.Device SelectedBeacon {
+			get;
+			set;
+		}
 
-		private List<string> _beacons = new List<string> ();
-		public List<string> Beacons {
+		public event PropertyChangedEventHandler PropertyChanged;
+		private List<GenCode.BeaconDevices.Manufacturers.Device>  _beacons = new List<GenCode.BeaconDevices.Manufacturers.Device> ();
+		public List<GenCode.BeaconDevices.Manufacturers.Device>  Beacons {
 			set {
 				if (_beacons != value) {
 					if (PropertyChanged != null) {
 						PropertyChanged (this, 
-							new PropertyChangedEventArgs ("Beacons"));
+							new PropertyChangedEventArgs ("Beacons2"));
 					}
 				}
 			}
@@ -30,26 +34,9 @@ namespace GenCode.DroneDown.ViewModels
 			}
 		}
 
-		private List<GenCode.BeaconDevices.Manufacturers.Device>  _beacons2 = new List<GenCode.BeaconDevices.Manufacturers.Device> ();
-		public List<GenCode.BeaconDevices.Manufacturers.Device>  Beacons2 {
-			set {
-				if (_beacons2 != value) {
-					if (PropertyChanged != null) {
-						PropertyChanged (this, 
-							new PropertyChangedEventArgs ("Beacons2"));
-					}
-				}
-			}
-			get {
-				return _beacons2;
-			}
-		}
-
 		public TabPageWelcomeViewModel ()
 		{
-			SetupBeacons (new List<IManufacturer> { new XamarinBeacons (), new BKON (), new Estimote (), new Radius () });
-
-
+			SetupBeacons (new List<IManufacturer> { new BKON (), new Estimote (), new Radius () });
 		}
 
 		/// <summary>
@@ -62,11 +49,7 @@ namespace GenCode.DroneDown.ViewModels
 				Log.WriteLine ("Setting up beacons, loading.", TraceLogLevel.Verbose);
 
 				foreach (var item in manufs) {
-					Beacons.Add (item.GetDevice.BeaconId);
-				}
-
-				foreach (var item in manufs) {
-					Beacons2.Add (item.GetDevice);
+					Beacons.Add (item.GetDevice);
 				}
 				//Beacons2.First().BeaconId
 			} catch (Exception ex) {

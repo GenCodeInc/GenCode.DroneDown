@@ -39,14 +39,18 @@ namespace GenCode.DroneDown
 					distance = DistanceCalculator.Calibrated ? DistanceCalculator.CalculateDistance (rssi) : distance;
 
 					// set the message
-					BeaconDistanceMessages.Text = String.Format ("(Rssi) {0} Distance {1:0.0}", rssi, distance);
-
+					string message = String.Format ("(Rssi) {0} Distance {1:0.0}", rssi, distance);
+					BeaconDistanceMessages.Text = message;
+					Log.WriteLine (message);
+					
 					// set the end ranges
 					_rssiRange.EndValue = rssi;
 					_distanceRange.EndValue = distance * -1.0;
 
 					// set the big label to distance
-					_bigLabel.Text = String.Format ("{0:0.0}", distance);
+					string bigLabelText = String.Format ("{0:0.0}", distance);
+					_bigLabel.Text = bigLabelText;
+					Log.WriteLine(bigLabelText);
 				} else {
 					_bigLabel.Text = "N/A";
 				}

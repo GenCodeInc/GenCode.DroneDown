@@ -11,15 +11,13 @@ namespace GenCode.BeaconDevices.Manufacturers
 	/// </summary>
 	public class Radius : IManufacturer
 	{
-		private const string _uUID = "2F234454-cf6d4a0f-adf2-f4911ba9ffa6";
-		private const string _beaconId = "Radius";
-
 		#region IManufacturer implementation
 
 		public Device GetDevice {
 			get { return new Device {
-					BeaconId = _beaconId,
-					UUID = _uUID
+					BeaconId = "Radius",
+					UUID = "2F234454-cf6d4a0f-adf2-f4911ba9ffa6",
+					Description = "Look for a BKON beacon http://www.radiusnetworks.com"
 				};
 			}
 		}
@@ -28,7 +26,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 
 		public Radius ()
 		{
-			Logging.Log.WriteLine(String.Format("{0} device created", _beaconId));
+			Logging.Log.WriteLine(String.Format("{0} device created", GetDevice.BeaconId));
 		}
 	}
 }

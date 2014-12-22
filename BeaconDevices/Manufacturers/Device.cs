@@ -7,8 +7,18 @@
 	/// </summary>
 	public class Device
 	{
-		public string UUID;
-		public string BeaconId;
+		public string UUID {
+			get;
+			set;
+		}
+		public string BeaconId {
+			get;
+			set;
+		}
+		public string Description {
+			get;
+			set;
+		}
 	}
 }
 

@@ -14,15 +14,12 @@ namespace GenCode.BeaconDevices.Manufacturers
 	/// </summary>
 	public class XamarinBeacons : IManufacturer
 	{
-		private const string _uUID = "00000000-0000-0000-0000-000000000000";
-		private const string _beaconId = "Xamarin";
-
 		#region IManufacturer implementation
-
 		public Device GetDevice {
 			get { return new Device {
-					BeaconId = _beaconId,
-					UUID = _uUID
+					BeaconId = "Xamarin",
+					UUID = "00000000-0000-0000-0000-000000000000",
+					Description = "Simulates beacon data, uses Amazon Web Services"
 				};
 			}
 		}
@@ -31,7 +28,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 
 		public XamarinBeacons ()
 		{
-			Logging.Log.WriteLine(String.Format("{0} device created", _beaconId));
+			Logging.Log.WriteLine(String.Format("{0} device created", GetDevice.BeaconId));
 		}
 	}
 }
