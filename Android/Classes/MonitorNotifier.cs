@@ -1,7 +1,7 @@
 ﻿using System;
 using RadiusNetworks.IBeaconAndroid;
 
-namespace GenCode.DroneDown.Android
+namespace GenCode.DroneDown.Android.Classes
 {    
 	public class MonitorEventArgs : EventArgs
 	{

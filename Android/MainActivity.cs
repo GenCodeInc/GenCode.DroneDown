@@ -6,9 +6,11 @@ using Xamarin.Forms.Platform.Android;
 using RadiusNetworks.IBeaconAndroid;
 using Xamarin.Forms;
 using System.Linq;
+using GenCode.DroneDown.Android.Classes;
 using GenCode.DroneDown.Views;
 using GenCode.Logging;
 using Device = GenCode.BeaconDevices.Manufacturers.Device;
+using MonitorNotifier = GenCode.DroneDown.Android.Classes.MonitorNotifier;
 
 
 namespace GenCode.DroneDown.Android
@@ -26,8 +28,7 @@ namespace GenCode.DroneDown.Android
         {
             try
             {
-                MessagingCenter.Subscribe<TabPageWelcome, Device>(this, "DeviceChanged", (sender, messageData) =>
-                    {
+                MessagingCenter.Subscribe<TabPageWelcome, Device>(this, "DeviceChanged", (sender, messageData) => {
                         SetupBeacons(messageData);
                         Log.WriteLine("DeviceChanged, look for new beacon");
                     });
@@ -113,7 +114,8 @@ namespace GenCode.DroneDown.Android
         }
 
         /// <summary>
-        /// This shutsdown a beacon if its running, it also is used by dispose
+        /// This shutsdown a beacon if its running, it also is used by dispose to 
+        /// cleans up any running beacons and the notifiers
         /// </summary>
         private void ShutdownBeacon()
         {
@@ -147,7 +149,6 @@ namespace GenCode.DroneDown.Android
             if (_iBeaconManager != null)
             {
                 _iBeaconManager.UnBind(this);
-
                 _iBeaconManager.Dispose();
             }
             _iBeaconManager = null;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using RadiusNetworks.IBeaconAndroid;
 
-namespace GenCode.DroneDown.Android
+namespace GenCode.DroneDown.Android.Classes
 {
 	public class RangeEventArgs : EventArgs
 	{
