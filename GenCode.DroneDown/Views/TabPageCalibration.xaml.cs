@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GenCode.Logging;
 using Xamarin.Forms;
-using GenCode.Logging;
 
-namespace GenCode.DroneDown
+namespace GenCode.DroneDown.Views
 {	
 	public partial class TabPageCalibration : ContentPage
 	{	

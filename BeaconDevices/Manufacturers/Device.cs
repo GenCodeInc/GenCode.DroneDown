@@ -7,20 +7,27 @@
 	/// </summary>
 	public class Device
 	{
-		public string UUID {
-			get;
-			set;
-		}
+	    private string _uuid;
+	    private string _beaconId;
+	    private string _description;
 
-		public string BeaconId {
-			get;
-			set;
-		}
+	    public string Uuid
+	    {
+	        get { return _uuid; }
+	        set { _uuid = value; }
+	    }
 
-		public string Description {
-			get;
-			set;
-		}
+	    public string BeaconId
+	    {
+	        get { return _beaconId; }
+	        set { _beaconId = value; }
+	    }
+
+	    public string Description
+	    {
+	        get { return _description; }
+	        set { _description = value; }
+	    }
 	}
 }
 

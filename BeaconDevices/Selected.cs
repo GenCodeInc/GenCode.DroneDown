@@ -12,7 +12,7 @@ namespace GenCode.BeaconDevices
 	{
 		private static Device _default;
 
-		public static Device Device {
+		public static Device GetDevice {
 			get {
 				return _default;
 			}

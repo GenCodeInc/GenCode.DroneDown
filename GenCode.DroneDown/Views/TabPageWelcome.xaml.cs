@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GenCode.Logging;
 using Xamarin.Forms;
-using GenCode.Logging;
-using System.Linq;
-using GenCode.BeaconDevices.Manufacturers;
-using GenCode.DroneDown.ViewModels;
+using Device = GenCode.BeaconDevices.Manufacturers.Device;
 
-namespace GenCode.DroneDown
+namespace GenCode.DroneDown.Views
 {	
 	/// <summary>
 	/// Welcome page that lets the use select their beacon
 	/// </summary>
-	public partial class TabPageWelcome : ContentPage
+	public partial class TabPageWelcome
 	{	
 
 		public TabPageWelcome () {
@@ -31,7 +27,12 @@ namespace GenCode.DroneDown
 
 			Log.WriteLine ("Tapped: " + e.Item, TraceLogLevel.Verbose);
 
-			GenCode.BeaconDevices.Default.Device = (GenCode.BeaconDevices.Manufacturers.Device)e.Item;
+            // Change the
+            BeaconDevices.Default.GetDevice = (Device)e.Item;
+
+            // Broadcast that the user selected another beacon
+            MessagingCenter.Send(((MainContent)App.GetMainPage()).WelcomePage, "DeviceChanged", BeaconDevices.Default.GetDevice);
+
 
 			((ListView)sender).SelectedItem = null; // de-select the row
 		}

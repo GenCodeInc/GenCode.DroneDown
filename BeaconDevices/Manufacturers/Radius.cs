@@ -17,7 +17,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 			get {
 				return new Device {
 					BeaconId = "Radius",
-					UUID = "2F234454-cf6d4a0f-adf2-f4911ba9ffa6",
+					Uuid = "2F234454-cf6d4a0f-adf2-f4911ba9ffa6",
 					Description = "Look for a BKON beacon http://www.radiusnetworks.com"
 				};
 			}

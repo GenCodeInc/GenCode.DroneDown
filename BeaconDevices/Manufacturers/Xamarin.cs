@@ -20,7 +20,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 			get {
 				return new Device {
 					BeaconId = "Xamarin",
-					UUID = "00000000-0000-0000-0000-000000000000",
+					Uuid = "00000000-0000-0000-0000-000000000000",
 					Description = "Simulates beacon data, uses Amazon Web Services"
 				};
 			}

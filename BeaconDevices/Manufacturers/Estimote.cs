@@ -17,7 +17,7 @@ namespace GenCode.BeaconDevices.Manufacturers
 			get {
 				return new Device {
 					BeaconId = "Estimote",
-					UUID = "C48C6716-193F-477B-B73A-C550CE582A22",
+					Uuid = "C48C6716-193F-477B-B73A-C550CE582A22",
 					Description = "Look for a Estimote beacon http://estimote.com"
 				};
 			}

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GenCode.Logging;
 using Xamarin.Forms;
-using GenCode.Logging;
 
-namespace GenCode.DroneDown
+namespace GenCode.DroneDown.Views
 {	
-	public partial class MainContent : TabbedPage
+	public partial class MainContent
 	{	
 		public readonly TabPageWelcome WelcomePage = new TabPageWelcome ();
 		public readonly TabPageMonitor MonitorPage = new TabPageMonitor ();
@@ -16,9 +14,9 @@ namespace GenCode.DroneDown
 			InitializeComponent ();
 			Log.WriteLine ("MainContent, Loading tabs.", TraceLogLevel.Verbose);
 
-			this.Children.Add (WelcomePage);
-			this.Children.Add (MonitorPage);
-			this.Children.Add (CalibrationPage);
+			Children.Add (WelcomePage);
+			Children.Add (MonitorPage);
+			Children.Add (CalibrationPage);
 		}
 	}
 }

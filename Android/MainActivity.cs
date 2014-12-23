@@ -2,169 +2,245 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
-
 using Xamarin.Forms.Platform.Android;
 using RadiusNetworks.IBeaconAndroid;
 using Xamarin.Forms;
 using System.Linq;
+using GenCode.DroneDown.Views;
 using GenCode.Logging;
+using Device = GenCode.BeaconDevices.Manufacturers.Device;
 
 
 namespace GenCode.DroneDown.Android
 {
-	[Activity (Label = "GenCode.DroneDown.Android", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-	public class MainActivity : AndroidActivity, IBeaconConsumer
-	{
-		IBeaconManager _iBeaconManager;
-		MonitorNotifier _monitorNotifier;
-		RangeNotifier _rangeNotifier;
-		Region _monitoringRegion;
-		Region _rangingRegion;
+    [Activity(Label = "GenCode.DroneDown.Android", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : AndroidActivity, IBeaconConsumer
+    {
+        IBeaconManager _iBeaconManager;
+        MonitorNotifier _monitorNotifier;
+        RangeNotifier _rangeNotifier;
+        Region _monitoringRegion;
+        Region _rangingRegion;
+
+        public MainActivity()
+        {
+            try
+            {
+                MessagingCenter.Subscribe<TabPageWelcome, Device>(this, "DeviceChanged", (sender, messageData) =>
+                    {
+                        SetupBeacons(messageData);
+                        Log.WriteLine("DeviceChanged, look for new beacon");
+                    });
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(ex);
+                throw;
+            }
+        }
+
+        protected override void OnCreate(Bundle bundle)
+        {
+            try
+            {
+                base.OnCreate(bundle);
+                Forms.Init(this, bundle);
+
+                // This redundent variable is required to initialize the infragistics controls per documentation in the beta
+                // supressing warning
+#pragma warning disable 219
+                // ReSharper disable once UnusedVariable
+                var type = typeof(Infragistics.Xamarin.Android.RadialGaugeViewRenderer);
+#pragma warning restore 219
+
+                // setting up a beacon by passing in any device you want
+                BeaconDevices.Default.GetDevice = new BeaconDevices.Manufacturers.Bkon().GetDevice;
+                SetupBeacons(BeaconDevices.Default.GetDevice);
+
+                // Setup the page
+                SetPage(App.GetMainPage());
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Setups your beacon.
+        /// </summary>
+        /// <param name="device">manufucturer.</param>
+        private void SetupBeacons(Device device)
+        {
+            try
+            {
+                if (device != null)
+                {
+                    ShutdownBeacon();
+
+                    _iBeaconManager = IBeaconManager.GetInstanceForApplication(this);
+                    _monitorNotifier = new MonitorNotifier();
+                    _rangeNotifier = new RangeNotifier();
+
+                    _monitoringRegion = new Region(device.BeaconId, device.Uuid, null, null);
+                    _rangingRegion = new Region(device.BeaconId, device.Uuid, null, null);
+
+                    if (_iBeaconManager != null)
+                    {
+                        _iBeaconManager.Bind(this);
+                        _monitorNotifier.EnterRegionComplete += EnteredRegion;
+                        _monitorNotifier.ExitRegionComplete += ExitedRegion;
+
+                        _rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
+                        // _iBeaconManager.StartMonitoringBeaconsInRegion(_rangingRegion);
+                        //_iBeaconManager.StartRangingBeaconsInRegion(_rangingRegion);
+                    }
+                    else
+                    {
+                        Log.WriteLine("iBeaconManager is null and has not been set", TraceLogLevel.Info);
+                    }
 
 
-		public MainActivity ()
-		{
-			try
-			{
-				// setting up a beacon by passing in any device you want
-				SetupBeacons (GenCode.BeaconDevices.Default.Device);
-			}
-			catch(Exception ex) {
-				Log.WriteLine(ex);
-				throw;
-			}
-		}
+                    Log.WriteLine("Setup beacon method complete", TraceLogLevel.Verbose);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(ex);
+                throw;
+            }
+        }
 
-		protected override void OnCreate (Bundle bundle)
-		{
-			try
-			{ 
-				base.OnCreate (bundle);
+        /// <summary>
+        /// This shutsdown a beacon if its running, it also is used by dispose
+        /// </summary>
+        private void ShutdownBeacon()
+        {
+            if (_iBeaconManager != null)
+            {
+                _iBeaconManager.StopRangingBeaconsInRegion(_rangingRegion);
+                _iBeaconManager.StopMonitoringBeaconsInRegion(_rangingRegion);
+                _iBeaconManager.SetRangeNotifier(null);
+                _iBeaconManager.SetMonitorNotifier(null);
+            }
+            if (_monitoringRegion != null)
+            {
+                _monitoringRegion.Dispose();
+                _monitoringRegion = null;
+            }
+            if (_monitorNotifier != null)
+            {
+                _monitorNotifier.Dispose();
+                _monitorNotifier = null;
+            }
+            if (_rangingRegion != null)
+            {
+                _rangingRegion.Dispose();
+                _rangingRegion = null;
+            }
+            if (_rangeNotifier != null)
+            {
+                _rangeNotifier.Dispose();
+                _rangeNotifier = null;
+            }
+            if (_iBeaconManager != null)
+            {
+                _iBeaconManager.UnBind(this);
 
-				// This is required to initialize the infragistics controls per documentation, supressing warning
-				#pragma warning disable 219
-				var type = typeof(Infragistics.Xamarin.Android.RadialGaugeViewRenderer);
-				#pragma warning restore 219
-
-				Xamarin.Forms.Forms.Init (this, bundle);
-
-				_iBeaconManager.Bind (this);
-				_monitorNotifier.EnterRegionComplete += EnteredRegion;
-				_monitorNotifier.ExitRegionComplete += ExitedRegion;
-
-				_rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
-
-				SetPage (App.GetMainPage ());
-			}
-			catch(Exception ex) {
-				Log.WriteLine(ex);
-				throw;
-			}
-		}
-
-		/// <summary>
-		/// Setups your beacon.
-		/// </summary>
-		/// <param name="device">manufucturer.</param>
-		private void SetupBeacons(GenCode.BeaconDevices.Manufacturers.Device device)
-		{
-			try
-			{
-				if(device != null)
-				{
-					_iBeaconManager = IBeaconManager.GetInstanceForApplication (this);
-					_monitorNotifier = new MonitorNotifier ();
-					_rangeNotifier = new RangeNotifier ();
-
-					_monitoringRegion = new Region (device.BeaconId, device.UUID, null, null);
-					_rangingRegion = new Region (device.BeaconId, device.UUID, null, null);
+                _iBeaconManager.Dispose();
+            }
+            _iBeaconManager = null;
+        }
 
 
-					Log.WriteLine ("Setup beacon method complete", TraceLogLevel.Verbose);
-				}
+        /// <summary>
+        /// Raises the I beacon service connect event.
+        /// </summary>
+        public void OnIBeaconServiceConnect()
+        {
+            try
+            {
+                _iBeaconManager.SetMonitorNotifier(_monitorNotifier);
+                _iBeaconManager.SetRangeNotifier(_rangeNotifier);
 
-				Log.WriteLine("No device is set up", TraceLogLevel.Verbose);
-			}
-			catch(Exception ex) {
-				Logging.Log.WriteLine (ex);
-				throw;
-			}
-		}
+                _iBeaconManager.StartMonitoringBeaconsInRegion(_monitoringRegion);
+                _iBeaconManager.StartRangingBeaconsInRegion(_rangingRegion);
 
+                Log.WriteLine("Beacon service connected", TraceLogLevel.Verbose);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(ex);
+                throw;
+            }
+        }
 
-		/// <summary>
-		/// Raises the I beacon service connect event.
-		/// </summary>
-		public void OnIBeaconServiceConnect ()
-		{
-			try
-			{
-				_iBeaconManager.SetMonitorNotifier (_monitorNotifier);
-				_iBeaconManager.SetRangeNotifier (_rangeNotifier);
+        /// <summary>
+        /// Entereds the region callback.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        void EnteredRegion(object sender, MonitorEventArgs e)
+        {
+            Log.WriteLine("Entered Region", TraceLogLevel.Verbose);
+        }
 
-				_iBeaconManager.StartMonitoringBeaconsInRegion (_monitoringRegion);
-				_iBeaconManager.StartRangingBeaconsInRegion (_rangingRegion);
+        /// <summary>
+        /// Exiteds the region callback.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        void ExitedRegion(object sender, MonitorEventArgs e)
+        {
+            Log.WriteLine("Exited Region", TraceLogLevel.Verbose);
+        }
 
-				Log.WriteLine ("Beacon service connected", TraceLogLevel.Verbose);
-			}
-			catch(Exception ex) {
-				Log.WriteLine (ex);
-				throw;
-			}
-		}
+        /// <summary>
+        /// This is the Radius networks callback when ranging a beacon
+        /// Here we will call Messaging Center to anyone who is listining
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        void RangingBeaconsInRegion(object sender, RangeEventArgs e)
+        {
+            try
+            {
+                var found = false;
+                var rssi = 0;
+                var accuracy = -999D;
 
-		/// <summary>
-		/// Entereds the region callback.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
-		void EnteredRegion (object sender, MonitorEventArgs e)
-		{
-			Log.WriteLine ("Entered Region", TraceLogLevel.Verbose);
-		}
+                if (e.Beacons.Count > 0)
+                {
+                    found = true;
+                    var beacon = e.Beacons.FirstOrDefault();
+                    if (beacon != null)
+                    {
+                        rssi = beacon.Rssi;
+                        accuracy = beacon.Accuracy;
+                    }
+                }
 
-		/// <summary>
-		/// Exiteds the region callback.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
-		void ExitedRegion (object sender, MonitorEventArgs e)
-		{
-			Log.WriteLine ("Exited Region", TraceLogLevel.Verbose);
-		}
+                // Send the message, lets use a Tuple to prevent having to make a new class.
+                MessagingCenter.Send(((MainContent)App.GetMainPage()).MonitorPage, "BeaconMessage", new Tuple<bool, int, double>(found, rssi, accuracy));
 
-		/// <summary>
-		/// This is the Radius networks callback when ranging a beacon
-		/// Here we will call Messaging Center to anyone who is listining
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
-		void RangingBeaconsInRegion (object sender, RangeEventArgs e)
-		{
-			try {
-				bool found = false;
-				int rssi = 0;
-				double accuracy = -999;
+                // log whats happening
+                Log.WriteLine(String.Format("RangingBeaconsInRegion for {0} sending message rssi {1} accuracy {2}", BeaconDevices.Default.GetDevice.BeaconId, rssi, accuracy), TraceLogLevel.Verbose);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(ex);
+                throw;
+            }
+        }
 
-				if (e.Beacons.Count > 0) {
-					found = true;
-					var beacon = e.Beacons.FirstOrDefault ();
-					rssi = beacon.Rssi;
-					accuracy = beacon.Accuracy;
-				}
+        void IDisposable.Dispose()
+        {
+            ShutdownBeacon();
 
-				// Send the message, lets use a Tuple to prevent having to make a new class.
-				MessagingCenter.Send (((MainContent)App.GetMainPage ()).MonitorPage, "BeaconMessage", new Tuple<bool, int, double> (found, rssi, accuracy));
-
-				// log whats happening
-				Log.WriteLine (String.Format ("RangingBeaconsInRegion sending message rssi {0} accuracy {1}", rssi, accuracy), TraceLogLevel.Verbose);
-			}
-			catch(Exception ex) {
-				Log.WriteLine (ex);
-				throw;
-			}
-		}
-	}
+            base.Dispose();
+        }
+    }
 }
 
 

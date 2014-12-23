@@ -1,10 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
-using Xamarin.Forms;
-using GenCode.BeaconDevices.Manufacturers;
 using System.Collections.Generic;
+using System.ComponentModel;
+using GenCode.BeaconDevices.Manufacturers;
 using GenCode.Logging;
-using System.Linq;
 
 namespace GenCode.DroneDown.ViewModels
 {
@@ -13,21 +11,17 @@ namespace GenCode.DroneDown.ViewModels
 	/// </summary>
 	class TabPageWelcomeViewModel : INotifyPropertyChanged
 	{
-		public GenCode.BeaconDevices.Manufacturers.Device SelectedBeacon {
-			get;
-			set;
-		}
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+	    public Device SelectedBeacon { get; set; }
 
-		private List<GenCode.BeaconDevices.Manufacturers.Device> _beacons = new List<GenCode.BeaconDevices.Manufacturers.Device> ();
-
-		public List<GenCode.BeaconDevices.Manufacturers.Device>  Beacons {
+	    private readonly List<Device> _beacons = new List<Device> ();
+	    public List<Device>  Beacons {
 			set {
 				if (_beacons != value) {
 					if (PropertyChanged != null) {
 						PropertyChanged (this, 
-							new PropertyChangedEventArgs ("Beacons2"));
+							new PropertyChangedEventArgs ("Beacons"));
 					}
 				}
 			}
@@ -44,7 +38,7 @@ namespace GenCode.DroneDown.ViewModels
 		/// </summary>
 		public TabPageWelcomeViewModel ()
 		{
-			SetupBeacons (new List<IManufacturer> { new BKON (), new Estimote (), new Radius () });
+			SetupBeacons (new List<IManufacturer> { new Bkon (), new Estimote (), new Radius () });
 		}
 
 		/// <summary>
@@ -60,7 +54,7 @@ namespace GenCode.DroneDown.ViewModels
 					Beacons.Add (item.GetDevice);
 				}
 			} catch (Exception ex) {
-				Logging.Log.WriteLine (ex);
+				Log.WriteLine (ex);
 				throw;
 			}
 		}

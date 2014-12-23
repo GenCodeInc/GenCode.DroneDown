@@ -1,4 +1,5 @@
 ﻿using System;
+using GenCode.DroneDown.Views;
 using Xamarin.Forms;
 using GenCode.Logging;
 
@@ -10,7 +11,7 @@ namespace GenCode.DroneDown
 		{	
 			Log.WriteLine ("GetMainPage, Drone Down application has started.", TraceLogLevel.Verbose);
 
-			return new DroneDown.MainContent ();
+			return new MainContent ();
 		}
 	}
 }

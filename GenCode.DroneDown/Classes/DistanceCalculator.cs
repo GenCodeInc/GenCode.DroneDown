@@ -44,14 +44,9 @@ namespace GenCode.DroneDown
 				coefficient = CoefficientsToUse;
 
 			double ratio = rssi*1.0/TxPowerRSSI;
-			double distance;
-			if (ratio < 1.0) {
-				distance =  Math.Pow(ratio,10);
-			}
-			else {
-				distance = 
-					(coefficient.Coefficient1)*Math.Pow(ratio,coefficient.Coefficient2) + coefficient.Coefficient3;
-			}
+			double distance = ratio < 1.0 ? Math.Pow (ratio, 10) :
+				(coefficient.Coefficient1) * Math.Pow (ratio, coefficient.Coefficient2) + coefficient.Coefficient3;
+
 			return distance;
 		}
 
