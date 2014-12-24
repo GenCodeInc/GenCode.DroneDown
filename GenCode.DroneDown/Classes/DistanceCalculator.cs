@@ -57,16 +57,16 @@ namespace GenCode.DroneDown.Classes
 			// first get the average RSSI
 		    TxPowerRssi = rssiList.Sum() / rssiList.Count;
 
-			double prevDistance = 1000;
+			var prevDistance = 1000D;
 			CoefficientsToUse = Coefficients.First();
 
 			// now see what Coefficient comes cloest to 1 meter
 			foreach (var item in Coefficients) {
 				var distance = CalculateDistance (TxPowerRssi, item);
-				if (distance - 1.0 < prevDistance - 1.0) {
-					prevDistance = distance;
-					CoefficientsToUse = item;
-				}
+			    if (!(distance - 1.0 < prevDistance - 1.0)) continue;
+
+                prevDistance = distance;
+			    CoefficientsToUse = item;
 			}
 
 			Calibrated = true;

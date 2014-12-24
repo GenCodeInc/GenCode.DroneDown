@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage Title="Monitor" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:GenCode.DroneDown.ViewModels;assembly=GenCode.DroneDown" xmlns:ig="clr-namespace:Infragistics.Xamarin.Controls;assembly=Infragistics.Xamarin" x:Class="GenCode.DroneDown.Views.TabPageMonitor">
 	<ContentPage.Content>
-		<Grid x:Name="ContentGrid" BackgroundColor="#a9a9a9">
+		<Grid x:Name="ContentGrid" >
 			<Grid.BindingContext>
-				<local:TabPageMonitorViewModel />
+				<local:TabPageMonitorViewModel x:Name="TabPageMonitorViewModel" />
 			</Grid.BindingContext>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="80" />
@@ -12,18 +12,28 @@
 				<RowDefinition Height="20" />
 				<RowDefinition Height="80" />
 			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
+      <Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
-			<ig:RadialGauge x:Name="RadialGauge" TransitionDuration="500" NeedleBrush="Blue" ScaleStartAngle="90" Grid.Row="1" Grid.Column="0">
+			<ig:RadialGauge x:Name="DistanceOuterRadialGauge" FontBrush="Transparent" BackingBrush="#626D75" MinorTickBrush="#FF605F5B" TickBrush="#FF605F5B" TransitionDuration="500" NeedleBrush="Blue" Grid.Row="1" Grid.Column="0" MinorTickCount="4" MinorTickStartExtent=".78" MinorTickEndExtent=".81" MinorTickStrokeThickness="3" TickStrokeThickness="3"
+				ScaleStartAngle="90" ScaleEndAngle="357" MinimumValue="-50" MaximumValue="0" Interval="5" LabelInterval="40" TickStartExtent=".78" TickEndExtent=".81" NeedlePivotShape="None">
+      </ig:RadialGauge>
+			<ig:RadialGauge x:Name="RssiOuterRadialGauge" FontBrush="Transparent" MinorTickBrush="#FF605F5B" TickBrush="#FF605F5B" NeedlePivotShape = "None" TransitionDuration="500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0" MinorTickCount="3" MinorTickStartExtent=".57" MinorTickEndExtent=".60" MinorTickStrokeThickness="2" TickStrokeThickness="2"
+				ScaleStartAngle="90" ScaleEndAngle="357" MinimumValue="-50" MaximumValue="0" Interval="5" LabelInterval="40" TickStartExtent=".57" TickEndExtent=".60">
 			</ig:RadialGauge>
-			<ig:RadialGauge x:Name="RadialGaugeInner" TransitionDuration="500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
+			<ig:RadialGauge x:Name="RssiRadialGauge" FontBrush="Transparent" TickBrush="#FF605F5B" MinorTickBrush="#FF605F5B" TransitionDuration="1500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0" MinorTickCount="3" MinorTickStartExtent=".37" MinorTickEndExtent=".40" MinorTickStrokeThickness="1" TickStrokeThickness="1"
+				ScaleStartAngle="90" ScaleEndAngle="357" MinimumValue="-99" MaximumValue="-33" Interval="5" LabelInterval="40" NeedlePivotShape="None">
+  <ig:RadialGauge.Ranges>
+					<ig:RadialGaugeRange x:Name="RssiBarRadialGaugeRange" EndValue="{Binding Rssi, Mode=OneWay}" Brush="#FF00FF14" StartValue="-90" InnerStartExtent=".57" InnerEndExtent=".57" OuterEndExtent=".60" OuterStartExtent=".60" />
+				</ig:RadialGauge.Ranges>
 			</ig:RadialGauge>
-			<ig:RadialGauge x:Name="RssiUnderGauge" TransitionDuration="1500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
+			<ig:RadialGauge x:Name="DistanceRadialGauge" Font="Bold" FontBrush="Transparent" TickBrush="#FF00FF14" TransitionDuration="1500" Grid.Row="1" Grid.Column="0" MinimumValue="-50" MaximumValue="0" ScaleStartAngle="90" ScaleEndAngle="357" Interval="5" LabelInterval="10"
+				NeedlePivotShape="None" TickStartExtent=".72" TickEndExtent=".78" LabelExtent=".66">
+				<ig:RadialGauge.Ranges>
+					<ig:RadialGaugeRange x:Name="DistanceBarRadialGaugeRange"  EndValue="{Binding Distance, Mode=OneWay}" Brush="#FF00FF14" InnerStartExtent=".77" InnerEndExtent=".77" OuterStartExtent=".81" OuterEndExtent=".81" StartValue="-50" />
+				</ig:RadialGauge.Ranges>
 			</ig:RadialGauge>
-			<ig:RadialGauge x:Name="DistanceGauge" TransitionDuration="1500" NeedleBrush="Red" Grid.Row="1" Grid.Column="0">
-			</ig:RadialGauge>
-			<Label HorizontalOptions="Center" Font="Bold, Large" TextColor="Black" x:Name="BeaconDistanceMessages" Grid.Row="2" Grid.Column="0" />
+			<Label HorizontalOptions="Center" Font="Bold, Large" Text="{Binding Message, Mode=OneWay}" TextColor="White" x:Name="BeaconDistanceMessages" Grid.Row="2" Grid.Column="0" />
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>

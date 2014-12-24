@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace GenCode.DroneDown.Views
 {	
-	public partial class TabPageCalibration : ContentPage
+	public partial class TabPageCalibration
 	{	
 		public TabPageCalibration ()
 		{
