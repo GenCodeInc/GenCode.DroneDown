@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="GenCode.DroneDown.BeaconEmulator.Services.Beacon" CodeBehind="Beacon.svc.cs" %>

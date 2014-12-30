@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GenCode.BeaconDevices" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GenCode.BeaconDevices" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfBeaconData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BeaconData" nillable="true" type="tns:BeaconData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBeaconData" nillable="true" type="tns:ArrayOfBeaconData" />
+  <xs:complexType name="BeaconData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Distance" type="xs:double" />
+      <xs:element minOccurs="0" name="Found" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Rssi" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BeaconData" nillable="true" type="tns:BeaconData" />
+</xs:schema>

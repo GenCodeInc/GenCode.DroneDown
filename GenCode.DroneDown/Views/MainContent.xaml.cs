@@ -25,10 +25,10 @@ namespace GenCode.DroneDown.Views
 	    protected override void OnAppearing()
 	    {
 	        base.OnAppearing();
-            var bc = new BeaconClient();
+            ////var bc = new BeaconClient();
 
-            bc.CheckLatestVersionCompleted += bc_CheckLatestVersionCompleted;
-            bc.CheckLatestVersionAsync("123");
+            ////bc.CheckLatestVersionCompleted += bc_CheckLatestVersionCompleted;
+            ////bc.CheckLatestVersionAsync("123");
         }
 
 	    void bc_CheckLatestVersionCompleted(object sender, CheckLatestVersionCompletedEventArgs e)
