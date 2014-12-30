@@ -30,7 +30,7 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BeaconDataPackage.cs" />
+    <Compile Include="BeaconData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Manufacturers\BKON.cs" />
     <Compile Include="Manufacturers\Radius.cs" />

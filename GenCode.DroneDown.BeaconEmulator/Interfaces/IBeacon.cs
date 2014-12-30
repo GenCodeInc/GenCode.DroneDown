@@ -10,6 +10,6 @@ namespace GenCode.DroneDown.BeaconEmulator.Interfaces
         bool CheckVersion(string version);
 
         [OperationContract]
-        List<BeaconDevices.BeaconDataPackage> Emulate(BeaconDevices.Manufacturers.XamarinBeaconsLLC beacon);
+        List<BeaconDevices.BeaconData> Emulate(BeaconDevices.Manufacturers.XamarinBeaconsLLC beacon);
     }
 }

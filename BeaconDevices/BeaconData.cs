@@ -1,6 +1,6 @@
 ﻿namespace GenCode.BeaconDevices
 {
-    public class BeaconDataPackage
+    public class BeaconData
     {
         public bool Found;
         public int Rssi;

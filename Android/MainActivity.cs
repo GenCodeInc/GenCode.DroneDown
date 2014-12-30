@@ -224,7 +224,7 @@ namespace GenCode.DroneDown.Android
                 }
 
                 // Send the message
-                MessagingCenter.Send(((MainContent)App.GetMainPage()).MonitorPage, "BeaconMessage", new BeaconDataPackage {Found = found, Rssi =  rssi, Distance = accuracy});
+                MessagingCenter.Send(((MainContent)App.GetMainPage()).MonitorPage, "BeaconMessage", new BeaconData {Found = found, Rssi =  rssi, Distance = accuracy});
 
                 // log whats happening
                 Log.WriteLine(String.Format("RangingBeaconsInRegion for {0} sending message rssi {1} accuracy {2}", BeaconDevices.Default.GetDevice.BeaconId, rssi, accuracy), TraceLogLevel.Verbose);

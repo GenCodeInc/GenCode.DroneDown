@@ -53,7 +53,7 @@ namespace GenCode.DroneDown.ViewModels
         public TabPageMonitorViewModel()
 	    {
             // Subscribe to the messages
-            MessagingCenter.Subscribe<TabPageMonitor, BeaconDataPackage>(this, "BeaconMessage", (sender, messageData) => 
+            MessagingCenter.Subscribe<TabPageMonitor, BeaconData>(this, "BeaconMessage", (sender, messageData) => 
                 Device.BeginInvokeOnMainThread(() => ProcessBeaconMessage(messageData.Found, messageData.Rssi, messageData.Distance)));
 	    }
 

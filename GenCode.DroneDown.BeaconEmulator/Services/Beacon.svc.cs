@@ -11,7 +11,7 @@ namespace GenCode.DroneDown.BeaconEmulator.Services
         }
 
      
-        System.Collections.Generic.List<BeaconDevices.BeaconDataPackage> IBeacon.Emulate(XamarinBeaconsLLC beacon)
+        System.Collections.Generic.List<BeaconDevices.BeaconData> IBeacon.Emulate(XamarinBeaconsLLC beacon)
         {
             throw new System.NotImplementedException();
         }
