@@ -4,6 +4,7 @@ using Xamarin.Forms;
 
 namespace GenCode.DroneDown.iOS
 {
+
 	[Register ("AppDelegate")]
 	public partial class AppDelegate : UIApplicationDelegate
 	{
