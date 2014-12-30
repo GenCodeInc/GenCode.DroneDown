@@ -1,6 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using GenCode.BeaconDevices;
 using GenCode.DroneDown.Classes;
 using GenCode.DroneDown.Views;
 using Xamarin.Forms;
@@ -53,12 +52,9 @@ namespace GenCode.DroneDown.ViewModels
 
         public TabPageMonitorViewModel()
 	    {
-            MessagingCenter.Subscribe<TabPageMonitor, Tuple<bool, int, double>>(this, "BeaconMessage", (sender, messageData) =>
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                ProcessBeaconMessage(messageData.Item1, messageData.Item2, messageData.Item3);
-            }));
-  
+            // Subscribe to the messages
+            MessagingCenter.Subscribe<TabPageMonitor, BeaconDataPackage>(this, "BeaconMessage", (sender, messageData) => 
+                Device.BeginInvokeOnMainThread(() => ProcessBeaconMessage(messageData.Found, messageData.Rssi, messageData.Distance)));
 	    }
 
 	    private void ProcessBeaconMessage(bool found, int rssi, double distance)

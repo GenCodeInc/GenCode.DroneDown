@@ -32,7 +32,7 @@ namespace GenCode.DroneDown.ViewModels
         /// </summary>
         public TabPageWelcomeViewModel()
         {
-            SetupBeacons(new List<IManufacturer> { new Bkon(), new Estimote(), new Radius() });
+            SetupBeacons(new List<IManufacturer> { new XamarinBeacons(), new Bkon(), new Estimote(), new Radius() });
         }
 
         /// <summary>

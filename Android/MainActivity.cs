@@ -6,6 +6,7 @@ using Xamarin.Forms.Platform.Android;
 using RadiusNetworks.IBeaconAndroid;
 using Xamarin.Forms;
 using System.Linq;
+using GenCode.BeaconDevices;
 using GenCode.DroneDown.Android.Classes;
 using GenCode.DroneDown.Views;
 using GenCode.Logging;
@@ -222,8 +223,8 @@ namespace GenCode.DroneDown.Android
                     }
                 }
 
-                // Send the message, lets use a Tuple to prevent having to make a new class.
-                MessagingCenter.Send(((MainContent)App.GetMainPage()).MonitorPage, "BeaconMessage", new Tuple<bool, int, double>(found, rssi, accuracy));
+                // Send the message
+                MessagingCenter.Send(((MainContent)App.GetMainPage()).MonitorPage, "BeaconMessage", new BeaconDataPackage {Found = found, Rssi =  rssi, Distance = accuracy});
 
                 // log whats happening
                 Log.WriteLine(String.Format("RangingBeaconsInRegion for {0} sending message rssi {1} accuracy {2}", BeaconDevices.Default.GetDevice.BeaconId, rssi, accuracy), TraceLogLevel.Verbose);
